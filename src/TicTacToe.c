@@ -152,6 +152,20 @@ void playerInp(int p) {
         playeInp(p);
 }
 
+bool moveInput()
+{
+    int temp;
+    waiting = true;
+    printf("Player2: make your move:\n");
+    if (received)
+    {
+        fflush(stdin);
+        result = mosquitto_publish(mosq, NULL, "state/move", 2, move, 0, false);
+        return (result == MOSQ_ERR_SUCCESS);
+    }
+    return false;
+}
+
 bool drawCheck() {
     if (maxTurns > 9 && !gameOver) {
         printf("Draw!\n");
