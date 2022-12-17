@@ -25,6 +25,9 @@ int main() {
 
     mosq = mosquitto_new("subscribe-test", true, &id);
 
+    mosquitto_connect_callback_set(mosq, on_connect);
+    mosquitto_message_callback_set(mosq, on_message);
+    
     rc = mosquitto_connect(mosq, "test.mosquitto.org", 1883, 10);
 
    if (rc) {
