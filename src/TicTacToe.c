@@ -152,6 +152,16 @@ void playerInp(int p) {
         playeInp(p);
 }
 
+bool drawCheck() {
+    if (maxTurns > 9 && !gameOver) {
+        printf("Draw!\n");
+        gameOver = true;
+        return true;
+    }
+    return false;
+}
+
+
 //comp inp
 void compInp(int player) {
     createBoard();
