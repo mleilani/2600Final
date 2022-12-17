@@ -272,4 +272,22 @@ int isValid(int x, int y) {
         return 0;
 }
 
+bool connect() {
+    mosq = mosquitto_new(NULL, true, NULL);
 
+    int rc = mosquitto_connect(mosq, "test.mosquitto.org", 1883, 30);
+
+    if (rc != MOSQ_ERR_SUCCESS) {
+        printf("Error connecting");
+        return false;
+    }
+
+    rc = mosquitto_subscribe(mosq, NULL, "ESP32/input", 0);
+
+    if (rc != MOSQ_ERR_SUCCESS) {
+        printf("Could not connect to broker with return code %d\n", rc);
+        return false;
+    }
+
+    return true;
+}
