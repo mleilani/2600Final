@@ -5,7 +5,17 @@
 #include <mosquitto.h>
 
 //test to check
+void on_connect(struct mosquitto *mosq, void *obj, int rc) {
+    printf("ID: %d\n", * (int *) obj);
 
+    if (rc) {
+        printf("Error with the code: %d\n", rc);
+        exit(-1);
+    }
+    mosquitto_subscribe(mosq, NULL, "ESP32/input", 0);
+}
+
+//main mosq start,loop,end function
 int main() {
     int rc, id = 12;
 
@@ -15,7 +25,7 @@ int main() {
 
     mosq = mosquitto_new("subscribe-test", true, &id);
 
-   rc = mosquitto_connect(mosq, "test.mosquitto.org", 1883, 10);
+    rc = mosquitto_connect(mosq, "test.mosquitto.org", 1883, 10);
 
    if (rc) {
     printf("Unable to connect to broker woth %d\n", rc);
