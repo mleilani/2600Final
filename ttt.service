@@ -1,0 +1,11 @@
+[Unit]
+Description = movement for player 2 tictactoe
+
+[Service]
+Type = simple
+User = Mia
+ExecStart = /Documents/CS2600Final/TicTacToePl.sh
+Restart=on-failure
+
+[Install]
+WantedBy = default.target
