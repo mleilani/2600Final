@@ -110,7 +110,7 @@ int main() {
     }
 
     while (!gameOver) {
-        getPlayerTurn(1);
+        playerInp(1);
         isGameOver(1);
         drawCheck();
         if (computer && !gameOver) {
@@ -141,15 +141,15 @@ void playerInp(int p) {
     int row = 0;
     int col = 0;
 
-    printf("Player %d: make your move\n", pT);
+    printf("Player %d: make your move\n", p);
     scanf("%d %d", &row, &col);
     if (isValid(row, col) == 1) {
         row -= 1;
         col -= 1;
-        board[row][col] = pT;
+        board[row][col] = p;
         maxTurns++;
     } else
-        getPlayerTurn(pT);
+        playeInp(p);
 }
 //board display
 void printBoard() {
@@ -171,8 +171,46 @@ void printBoard() {
 }
 
 //check for win condition
+bool isGameOver(int player) {
+    // check vertical
+    for (int i = 0; i < COL; i++) {
+        if (board[0][i] == player && board[1][i] == player && board[2][i] == player) {
+            gameOver = true;
+        }
+    }
 
-//reset
+    // check horizontal
+    for (int i = 0; i < ROW; i++) {
+        if (board[i][0] == player && board[i][1] == player && board[i][2] == player) {
+            gameOver = true;
+        }
+    }
+
+    // check diagonal win (top left to bottom right)
+    if (board[0][0] == player && board[1][1] == player && board[2][2] == player) {
+        gameOver = true;
+    }
+
+    // check diagonal win (bottom left to top right)
+    if (board[2][0] == player && board[1][1] == player && board[0][2] == player) {
+        gameOver = true;
+    }
+
+    if (gameOver) {
+        if (computer && player == 2) {
+            printf("Game over! Result: Computer wins!\n");
+            printBoard();
+        } else {
+            printf("Player %d Wins!\n", player);
+            printBoard();
+        }
+    }
+    return gameOver;
+}
+//gamereset
+
+
+//reset board
 void reset() {
     for (int i = 0; i < ROW; i++) {
         for (int j = 0; j < COL; j++) {
