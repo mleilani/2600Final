@@ -96,13 +96,13 @@ int main() {
     else if (menuInput == 3) {
         while (!gameOver) {
             delay(2);
-            computerInput(1);
+            compInp(1);
             isGameOver(1);
             drawCheck();
 
             if (!gameOver) {
                 delay(2);
-                computerInput(2);
+                compInp(2);
                 isGameOver(2);
                 drawCheck();
             }
@@ -114,7 +114,7 @@ int main() {
         isGameOver(1);
         drawCheck();
         if (computer && !gameOver) {
-            computerInput(2);
+            compInp(2);
             isGameOver(2);
             drawCheck();
         } else if (!gameOver) {
@@ -151,23 +151,37 @@ void playerInp(int p) {
     } else
         playeInp(p);
 }
+
+//comp inp
+void compInp(int player) {
+    printBoard();
+    bool isValid = false;
+
+    while (!isValid) {
+        int row = (rand() % (3)) + 1;
+        int column = (rand() % (3)) + 1;
+
+        if (board[row - 1][column - 1] == 0) {
+            board[row - 1][column - 1] = player;
+            printf("Computer: makes their move\n%d %d\n", row, column);
+            isValid = true;
+        }
+    }
+    maxTurns++;
+}
+
 //board display
 void printBoard() {
-    for (int i = 0; i < 3; i++) {
-        printf("+-----------+\n");
-        for (int j = 0; j < 3; j++) {
-            printf(" | ");
+    void createBoard() {
 
-            if (board[i][j] == 1)
-                printf("X");
-            else if (board[i][j] == 2)
-                printf("O");
-            else
-                printf(" ");
-        }
-        printf(" |\n");
-    }
-    printf("+-----------+\n");
+    printf("+---------------+\n");
+    printf("| %c | %c | %c | \n", board[0][0], board[0][1], board[0][2]);
+    printf("+---------------+\n");
+    printf("| %c | %c | %c | \n", board[1][0], board[1][1], board[1][2]);
+    printf("+---------------+\n");
+    printf("| %c | %c | %c | \n", board[2][0], board[2][1], board[2][2]);
+    printf("+---------------+\n");  
+}
 }
 
 //check for win condition
