@@ -20,7 +20,7 @@ bool computer = false;
 int totalTurns = 0;
 //methods
 void displayMenu();
-void printBoard();
+void createBoard();
 //player input
 void getPlayerInp(int p);
 void compInp(int player);
@@ -136,7 +136,7 @@ int main() {
 
 //player inp
 void playerInp(int p) {
-    printBoard();
+    createBoard();
 
     int row = 0;
     int col = 0;
@@ -154,7 +154,7 @@ void playerInp(int p) {
 
 //comp inp
 void compInp(int player) {
-    printBoard();
+    createBoard();
     bool isValid = false;
 
     while (!isValid) {
@@ -170,9 +170,26 @@ void compInp(int player) {
     maxTurns++;
 }
 
+//menu display
+void displayMenu() {
+    printf("\n======================\n");
+    printf("WELCOME TO TIC-TAC-TOE!\n");
+    printf("1. person v person\n");
+    printf("2. person v comp\n");
+    printf("3. comp v comp\n");
+
+    printf("Type out a choice and press Enter!\n");
+    printf("=======================\n");
+    scanf("%d", &menuInput);
+    printf("\nYou have entered choice %d\n", menuInput);
+
+    if (menuInput > 3) {
+        printf("\nInvalid Choice Please Choose Again\n");
+        displayMenu();
+    }
+}
 //board display
-void printBoard() {
-    void createBoard() {
+void createBoard() {
 
     printf("+---------------+\n");
     printf("| %c | %c | %c | \n", board[0][0], board[0][1], board[0][2]);
@@ -181,7 +198,6 @@ void printBoard() {
     printf("+---------------+\n");
     printf("| %c | %c | %c | \n", board[2][0], board[2][1], board[2][2]);
     printf("+---------------+\n");  
-}
 }
 
 //check for win condition
@@ -213,16 +229,23 @@ bool isGameOver(int player) {
     if (gameOver) {
         if (computer && player == 2) {
             printf("Game over! Result: Computer wins!\n");
-            printBoard();
+            createBoard();
         } else {
             printf("Player %d Wins!\n", player);
-            printBoard();
+            createBoard();
         }
     }
     return gameOver;
 }
 //gamereset
 
+void delay(int number_of_seconds) {
+    int milli_seconds = 1000 * number_of_seconds;
+
+    clock_t start_time = clock();
+    while (clock() < start_time + milli_seconds)
+        ;
+}
 
 //reset board
 void reset() {
