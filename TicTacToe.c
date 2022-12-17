@@ -22,7 +22,7 @@ int totalTurns = 0;
 void displayMenu();
 void printBoard();
 //player input
-void getPlayerInp(int pT);
+void getPlayerInp(int p);
 void compInp(int player);
 //game state
 void drawCheck();
@@ -134,6 +134,23 @@ int main() {
     return EXIT_SUCCESS;
 }
 
+//player inp
+void playerInp(int p) {
+    printBoard();
+
+    int row = 0;
+    int col = 0;
+
+    printf("Player %d: make your move\n", pT);
+    scanf("%d %d", &row, &col);
+    if (isValid(row, col) == 1) {
+        row -= 1;
+        col -= 1;
+        board[row][col] = pT;
+        maxTurns++;
+    } else
+        getPlayerTurn(pT);
+}
 //board display
 void printBoard() {
     for (int i = 0; i < 3; i++) {
